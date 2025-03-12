@@ -1,15 +1,15 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import CartWidget from '../CartWidget/CartWidget';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Navbar.css';
+import logo from '../../assets/draconet-logo2.ico'; // Importa el logo .ico
 
 const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
         <NavLink to="/" className="navbar-brand">
-          LOGO
+          <img src={logo} alt="Logo" className="navbar-logo" /> {/* Usa el logo */}
         </NavLink>
         <button
           className="navbar-toggler"

@@ -43,3 +43,7 @@
   .navbar-nav .nav-item:last-child {
     margin-left: auto;
   }
+
+  .navbar-logo {
+    height: 60px; /* Ajusta el tamaño según tus necesidades */
+  }
