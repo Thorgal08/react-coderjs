@@ -1,0 +1,18 @@
+.container {
+  padding: 2rem;
+}
+
+.product-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.card {
+  height: 100%;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
