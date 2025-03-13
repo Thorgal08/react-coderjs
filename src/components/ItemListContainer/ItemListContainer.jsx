@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import './ItemListContainer.css';
+import './ItemListContainer.modules.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ItemListContainer = ({ titulo }) => {

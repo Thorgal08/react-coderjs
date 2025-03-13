@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import CartWidget from '../CartWidget/CartWidget';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Navbar.css';
+import './Navbar.modules.css';
 import logo from '../../assets/draconet-logo2.ico'; // Importa el logo .ico
 
 const Navbar = () => {

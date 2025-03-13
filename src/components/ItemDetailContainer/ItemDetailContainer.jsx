@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import './ItemDetailContainer.css';
+import './ItemDetailContainer.modules.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ItemDetailContainer = () => {
