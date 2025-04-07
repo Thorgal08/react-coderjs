@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './item.modules.css';
+import '..//item/Item.modules.css'; // Importar el CSS
 
 const Item = ({ product }) => {
   const navigate = useNavigate();
