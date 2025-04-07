@@ -1,3 +1,4 @@
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import CartWidget from '../CartWidget/CartWidget';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,9 +9,13 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
-        <NavLink to="/" className="navbar-brand">
-          <img src={logo} alt="Logo" className="navbar-logo" /> {/* Usa el logo */}
+        {/* Logo */}
+        <NavLink to="/" className="navbar-brand d-flex align-items-center">
+          <img src={logo} alt="Logo" className="navbar-logo me-2" />
+          Draconet Hardware Shop
         </NavLink>
+
+        {/* Botón de hamburguesa */}
         <button
           className="navbar-toggler"
           type="button"
@@ -22,15 +27,18 @@ const Navbar = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
+
+        {/* Menú desplegable */}
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul className="navbar-nav mx-auto d-flex align-items-center">
+            {/* Categorías */}
             <li className="nav-item">
               <NavLink to="/" className="nav-link">
-                Home
+                Inicio
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/category/electronics" className="nav-link">
+              <NavLink to="/category/hardware" className="nav-link">
                 Hardware
               </NavLink>
             </li>
@@ -40,14 +48,14 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/category/offers" className="nav-link">
-                Ofertas
+              <NavLink to="/cart" className="nav-link">
+              <CartWidget />
               </NavLink>
             </li>
-          </ul>
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <CartWidget />
+
+            {/* Carrito */}
+            <li className="nav-item d-flex align-items-center">
+             
             </li>
           </ul>
         </div>

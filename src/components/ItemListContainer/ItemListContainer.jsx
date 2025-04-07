@@ -1,64 +1,54 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import './ItemListContainer.modules.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { collection, getDocs, query, where } from 'firebase/firestore'; // Importar funciones necesarias de Firestore
+import { useParams } from 'react-router-dom'; // Importar useParams para obtener el parámetro de la URL
+import db from '../../firebaseConfig';
+import ItemList from '../ItemList/ItemList';
+import './ItemListContainer.modules.css'; // Importar estilos personalizados si es necesario
+import { CartContext } from '../../context/CartContext';
 
 const ItemListContainer = ({ titulo }) => {
-  const { categoryId } = useParams();
+  const { categoryId } = useParams(); // Obtener el parámetro de categoría desde la URL
   const [productos, setProductos] = useState([]);
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProductos = async () => {
       try {
-        let url = 'https://fakestoreapi.com/products';
+        const collectionRef = collection(db, 'items'); // Referencia a la colección 'items'
+        let q;
+
         if (categoryId) {
-          url = `https://fakestoreapi.com/products/category/${categoryId}`;
-        }
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`Error HTTP! estado: ${response.status}`);
-        }
-        const data = await response.json();
-        if (Array.isArray(data)) {
-          setProductos(data);
+          // Si hay un categoryId, filtrar por categoría
+          q = query(collectionRef, where('category', '==', categoryId));
         } else {
-          throw new Error('Los datos no son un array');
+          // Si no hay categoryId, obtener todos los productos
+          q = collectionRef;
         }
+
+        const querySnapshot = await getDocs(q); // Ejecutar la consulta
+        const items = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setProductos(items);
       } catch (error) {
-        setError(error.message);
         console.error('Error al obtener los productos:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchProductos();
-  }, [categoryId]);
+  }, [categoryId]); // Ejecutar el efecto cuando cambie el categoryId
 
-  if (error) {
-    return <div className="container"><h1>Error: {error}</h1></div>;
+  if (loading) {
+    return <p>Cargando productos...</p>;
   }
 
   return (
-    <div className="container mt-4">
+    <div>
       <h1>{titulo}</h1>
-      <div className="row">
-        {productos.length > 0 ? (
-          productos.map((producto) => (
-            <div key={producto.id} className="col-md-3 mb-4">
-              <div className="card h-100">
-                <img src={producto.image} alt={producto.title} className="card-img-top product-image" />
-                <div className="card-body">
-                  <h5 className="card-title">{producto.title}</h5>
-                  <p className="card-text"><strong>Precio: ${producto.price}</strong></p>
-                  <Link to={`/item/${producto.id}`} className="btn btn-primary">Descripción del producto</Link>
-                </div>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p>No hay productos disponibles</p>
-        )}
-      </div>
+      <ItemList productos={productos} />
     </div>
   );
 };

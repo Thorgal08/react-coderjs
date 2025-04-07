@@ -43,3 +43,32 @@
 .navbar-nav .nav-item:last-child {
   margin-left: auto;
 }
+
+/* Estilo global para la aplicación */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f9fa; /* Fondo claro */
+  margin: 0;
+  padding: 0;
+}
+
+/* Contenedor principal */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Asegurar que el contenido ocupe toda la altura de la pantalla */
+}
+
+/* Pie de página */
+.footer {
+  background-color: #343a40; /* Fondo oscuro */
+  color: #fff; /* Texto blanco */
+  text-align: center;
+  padding: 10px 0;
+  margin-top: auto; /* Empujar el pie de página al final */
+}
+
+.footer p {
+  margin: 0;
+  font-size: 0.9rem;
+}

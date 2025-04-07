@@ -1,0 +1,59 @@
+/* Estilo para la tarjeta del producto */
+.card {
+  border: 1px solid #ddd; /* Borde ligero */
+  border-radius: 8px; /* Bordes redondeados */
+  transition: transform 0.2s, box-shadow 0.2s; /* Animación al pasar el mouse */
+  overflow: hidden; /* Asegurar que el contenido no se desborde */
+}
+
+.card:hover {
+  transform: scale(1.05); /* Efecto de zoom */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+}
+
+/* Estilo para la imagen del producto */
+.card-img-top {
+  border-top-left-radius: 8px; /* Bordes redondeados en la parte superior */
+  border-top-right-radius: 8px;
+  object-fit: cover; /* Ajustar la imagen al contenedor */
+  height: 150px; /* Altura fija */
+  width: 100%; /* Asegurar que ocupe todo el ancho */
+}
+
+/* Estilo para el cuerpo de la tarjeta */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+/* Estilo para el título del producto */
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Estilo para el precio del producto */
+.card-text {
+  font-size: 1rem;
+  color: #555;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Estilo para el botón */
+.btn {
+  background-color: #007bff; /* Color azul de Bootstrap */
+  color: #fff;
+  border: none;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn:hover {
+  background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+  transform: scale(1.05); /* Efecto de zoom */
+}

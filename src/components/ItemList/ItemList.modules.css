@@ -1,0 +1,57 @@
+/* Estilo para el contenedor principal */
+.container {
+  padding: 20px;
+  background-color: #f8f9fa; /* Color de fondo claro */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilo para cada fila */
+.row {
+  margin: 0 -15px; /* Ajustar márgenes para alineación */
+}
+
+/* Estilo para las columnas */
+.col-md-4 {
+  padding: 15px; /* Espaciado entre columnas */
+}
+
+/* Estilo para los elementos individuales (Item) */
+.card {
+  border: 1px solid #ddd; /* Borde ligero */
+  border-radius: 8px; /* Bordes redondeados */
+  transition: transform 0.2s, box-shadow 0.2s; /* Animación al pasar el mouse */
+}
+
+.card:hover {
+  transform: scale(1.05); /* Efecto de zoom */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+}
+
+/* Estilo para las imágenes */
+.card-img-top {
+  border-top-left-radius: 8px; /* Bordes redondeados en la parte superior */
+  border-top-right-radius: 8px;
+  object-fit: cover; /* Ajustar la imagen al contenedor */
+  height: 150px; /* Altura fija */
+}
+
+/* Estilo para los títulos */
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+/* Estilo para los precios */
+.card-text {
+  font-size: 1rem;
+  color: #555;
+  text-align: center;
+}
+
+/* Espaciado entre los botones */
+.btn {
+  margin-top: 10px;
+}

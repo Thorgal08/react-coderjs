@@ -1,49 +1,60 @@
 .navbar {
-    background-color: #1976d2;
-    padding: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .navbar-brand {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
-  }
-  
-  .navbar-nav .nav-item .nav-link {
-    color: white;
-    font-size: 1rem;
-    transition: color 0.3s;
-  }
-  
-  .navbar-nav .nav-item .nav-link:hover {
-    color: #ffeb3b;
-  }
-  
-  .navbar-toggler {
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-  
-  .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 0.5%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-  }
-  
-  .navbar-collapse {
-    justify-content: space-between;
-  }
-  
-  .navbar-nav {
-    align-items: center;
-  }
-  
-  .navbar-nav .nav-item {
-    margin-left: 1rem;
-  }
-  
-  .navbar-nav .nav-item:last-child {
-    margin-left: auto;
-  }
+  background-color: #1976d2;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-  .navbar-logo {
-    height: 60px; /* Ajusta el tamaño según tus necesidades */
-  }
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  align-items: center; /* Centrar verticalmente el logo y el texto */
+}
+
+.navbar-nav {
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Alinear verticalmente */
+  flex-wrap: wrap; /* Permitir que los elementos se ajusten en dispositivos pequeños */
+}
+
+.navbar-nav .nav-item {
+  margin: 0 1rem; /* Espaciado horizontal entre los elementos */
+}
+
+.navbar-logo {
+  height: 40px; /* Ajusta el tamaño del logo */
+  margin-right: 0.5rem; /* Espaciado entre el logo y el texto */
+}
+
+.nav-link {
+  font-size: 1rem; /* Ajusta el tamaño del texto */
+  padding: 0.5rem 1rem; /* Ajusta el espaciado */
+  color: white;
+  transition: color 0.3s;
+  text-align: center; /* Centrar el texto dentro de los enlaces */
+}
+
+.nav-link:hover {
+  color: #ffeb3b; /* Cambiar color al pasar el mouse */
+}
+
+.navbar-toggler {
+  border-color: rgb(255, 255, 255);
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.navbar-collapse {
+  justify-content: center; /* Centrar todos los elementos dentro del menú desplegable */
+}
+
+.cart-widget {
+  display: flex;
+  align-items: center; /* Centrar verticalmente el carrito */
+  justify-content: center; /* Centrar horizontalmente el carrito */
+  margin-left: 1rem; /* Espaciado entre el carrito y las categorías */
+}

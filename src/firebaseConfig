@@ -1,0 +1,19 @@
+// filepath: d:\DW-CODER\react-coderjs\src\firebaseConfig.js
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyC03NlwY1MDWvrtc7FT5_pDc3bNx2Dukpc",
+    authDomain: "react-js-b5b4e.firebaseapp.com",
+    projectId: "react-js-b5b4e",
+    storageBucket: "react-js-b5b4e.firebasestorage.app",
+    messagingSenderId: "894853022745",
+    appId: "1:894853022745:web:518ebebbd7ca000a809688"
+};
+
+// Inicializar Firebase
+const app = initializeApp(firebaseConfig);
+
+// Exportar Firestore
+const db = getFirestore(app);
+export default db;

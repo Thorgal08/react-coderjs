@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { doc, getDoc } from 'firebase/firestore'; // Importar funciones de Firestore
+import db from '../../firebaseConfig'; // Importar la configuración de Firebase
+import { CartContext } from '../../context/CartContext'; // Importar el contexto
 import './ItemDetailContainer.modules.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ItemDetailContainer = () => {
-  const { itemId } = useParams();
+  const { itemId } = useParams(); // Obtener el ID del producto desde la URL
+  const { handleAddToCart } = useContext(CartContext); // Obtener la función para añadir al carrito
   const [producto, setProducto] = useState(null);
   const [cantidad, setCantidad] = useState(1);
   const [error, setError] = useState(null);
@@ -12,12 +16,15 @@ const ItemDetailContainer = () => {
   useEffect(() => {
     const fetchProducto = async () => {
       try {
-        const response = await fetch(`https://fakestoreapi.com/products/${itemId}`);
-        if (!response.ok) {
-          throw new Error(`Error HTTP! estado: ${response.status}`);
+        // Obtener el documento del producto desde Firestore
+        const docRef = doc(db, 'items', itemId); // Referencia al documento en la colección 'items'
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setProducto({ id: docSnap.id, ...docSnap.data() }); // Guardar los datos del producto
+        } else {
+          throw new Error('El producto no existe en la base de datos.');
         }
-        const data = await response.json();
-        setProducto(data);
       } catch (error) {
         setError(error.message);
         console.error('Error al obtener el producto:', error);
@@ -28,12 +35,20 @@ const ItemDetailContainer = () => {
   }, [itemId]);
 
   const handleCantidadChange = (event) => {
-    setCantidad(event.target.value);
+    const value = parseInt(event.target.value, 10);
+    if (value > 0) {
+      setCantidad(value);
+    }
   };
 
-  const handleAddToCart = () => {
-    console.log(`Añadido ${cantidad} de ${producto.title} al carrito`);
-    // Aquí puedes añadir la lógica para añadir el producto al carrito
+  const handleAddToCartClick = () => {
+    if (cantidad > 0) {
+      const item = { ...producto, quantity: cantidad }; // Crear el objeto del producto con la cantidad seleccionada
+      handleAddToCart(item); // Añadir el producto al carrito
+      console.log(`Añadido ${cantidad} de ${producto.title} al carrito`);
+    } else {
+      alert('Por favor, selecciona una cantidad válida.');
+    }
   };
 
   if (error) {
@@ -66,7 +81,7 @@ const ItemDetailContainer = () => {
               className="form-control"
               style={{ width: '100px', display: 'inline-block', marginRight: '10px' }}
             />
-            <button onClick={handleAddToCart} className="btn btn-primary">Añadir al carrito</button>
+            <button onClick={handleAddToCartClick} className="btn btn-primary">Añadir al carrito</button>
           </div>
         </div>
       </div>

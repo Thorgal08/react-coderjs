@@ -1,0 +1,104 @@
+/* Contenedor principal del carrito */
+.cart {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f8f9fa; /* Fondo claro */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+/* Título del carrito */
+.cart h2 {
+  color: #343a40; /* Color oscuro */
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Lista de productos */
+.cart ul {
+  list-style: none;
+  padding: 0;
+}
+
+.cart li {
+  padding: 15px;
+  border-bottom: 1px solid #dee2e6; /* Línea divisoria */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart li:last-child {
+  border-bottom: none; /* Quitar línea del último elemento */
+}
+
+/* Información del producto */
+.cart li h3 {
+  font-size: 1.2rem;
+  color: #495057; /* Color gris oscuro */
+  margin: 0;
+}
+
+.cart li p {
+  margin: 5px 0;
+  color: #6c757d; /* Color gris */
+}
+
+/* Botones */
+.cart button {
+  margin-left: 10px;
+}
+
+.cart .btn {
+  padding: 5px 10px;
+  font-size: 0.9rem;
+}
+
+.cart .btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.cart .btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+/* Total del carrito */
+.cart h3 {
+  text-align: right;
+  color: #343a40; /* Color oscuro */
+  margin-top: 20px;
+}
+
+/* Botones de acción */
+.cart .action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.cart .action-buttons button {
+  margin-left: 10px;
+}
+
+/* Estilos para el CartWidget */
+.cart-widget {
+  display: inline-block;
+  color: #fff; /* Color del ícono */
+}
+
+.cart-widget .bi-cart3 {
+  font-size: 1.5rem; /* Tamaño del ícono */
+}
+
+.cart-widget .badge {
+  font-size: 0.8rem; /* Tamaño del contador */
+  padding: 5px 8px; /* Espaciado interno */
+  background-color: red; /* Color del fondo */
+  color: white; /* Color del texto */
+  border-radius: 50%; /* Forma circular */
+  position: absolute;
+  top: -10px;
+  right: -10px;
+}
