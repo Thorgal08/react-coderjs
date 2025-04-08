@@ -26,23 +26,13 @@ const Cart = () => {
       alert('Por favor, completa todos los campos del formulario.');
       return;
     }
-  
-    // Validar que el carrito no esté vacío y que los productos tengan datos completos
+
+    // Validar que el carrito no esté vacío
     if (cart.length === 0) {
       alert('El carrito está vacío. Agrega productos antes de confirmar la compra.');
       return;
     }
-  
-    const incompleteItems = cart.filter(
-      (item) => !item.id || !item.title || !item.price || !item.quantity
-    );
-  
-    if (incompleteItems.length > 0) {
-      console.error('Productos con datos incompletos:', incompleteItems);
-      alert('Hay productos en el carrito con datos incompletos. Revisa antes de confirmar la compra.');
-      return;
-    }
-  
+
     // Construir el objeto de la orden
     const order = {
       buyer,
@@ -55,7 +45,7 @@ const Cart = () => {
       total: totalPrice,
       date: new Date().toISOString(),
     };
-  
+
     try {
       // Enviar la orden a Firebase
       const docRef = await addDoc(collection(db, 'orders'), order);
@@ -63,7 +53,7 @@ const Cart = () => {
       handleEmptyCart(); // Vaciar el carrito después de confirmar la compra
       alert(`¡Compra confirmada! Tu ID de orden es: ${docRef.id}`);
     } catch (error) {
-      console.error('Error al generar la orden:', error);
+      console.error('Error al confirmar la compra:', error);
       alert('Hubo un error al confirmar la compra. Por favor, inténtalo de nuevo.');
     }
   };
@@ -185,25 +175,4 @@ const Cart = () => {
   );
 };
 
-const CartWidget = () => {
-  const { handleCount } = useContext(CartContext); // Obtener la función para contar los productos
-  const navigate = useNavigate(); // Hook para navegar a la página del carrito
-
-  return (
-    <div
-      className="position-relative"
-      onClick={() => navigate('/cart')} // Navegar al carrito al hacer clic
-      style={{ cursor: 'pointer' }}
-    >
-      <i className="bi bi-cart3 fs-4" style={{ color: 'white' }}></i> {/* Ícono de carrito de Bootstrap */}
-      {handleCount() > 0 && (
-        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-          {handleCount()} {/* Mostrar el número total de productos */}
-        </span>
-      )}
-    </div>
-  );
-};
-
 export default Cart;
-export { CartWidget };

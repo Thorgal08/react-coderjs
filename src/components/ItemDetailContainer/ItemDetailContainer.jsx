@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore'; // Importar funciones de Firestore
+import { doc, getDoc, updateDoc } from 'firebase/firestore'; // Importar funciones de Firestore
 import db from '../../firebaseConfig'; // Importar la configuración de Firebase
 import { CartContext } from '../../context/CartContext'; // Importar el contexto
 import './ItemDetailContainer.modules.css';
@@ -41,11 +41,22 @@ const ItemDetailContainer = () => {
     }
   };
 
-  const handleAddToCartClick = () => {
-    if (cantidad > 0) {
+  const handleAddToCartClick = async () => {
+    if (cantidad > 0 && cantidad <= producto.stock) {
       const item = { ...producto, quantity: cantidad }; // Crear el objeto del producto con la cantidad seleccionada
       handleAddToCart(item); // Añadir el producto al carrito
-      console.log(`Añadido ${cantidad} de ${producto.title} al carrito`);
+
+      // Reducir el stock en Firebase
+      const newStock = producto.stock - cantidad;
+      const productRef = doc(db, 'items', producto.id); // Referencia al documento del producto
+      try {
+        await updateDoc(productRef, { stock: newStock }); // Actualizar el stock en Firebase
+        setProducto((prev) => ({ ...prev, stock: newStock })); // Actualizar el estado local del producto
+        console.log(`Añadido ${cantidad} de ${producto.title} al carrito. Nuevo stock: ${newStock}`);
+      } catch (error) {
+        console.error('Error al actualizar el stock:', error);
+        alert('Hubo un error al actualizar el stock. Por favor, inténtalo de nuevo.');
+      }
     } else {
       alert('Por favor, selecciona una cantidad válida.');
     }
@@ -69,20 +80,26 @@ const ItemDetailContainer = () => {
           <h1>{producto.title}</h1>
           <p>{producto.description}</p>
           <p><strong>Precio: ${producto.price}</strong></p>
-          <div className="quantity-input">
-            <label htmlFor="cantidad">Cantidad:</label>
-            <input
-              type="number"
-              id="cantidad"
-              name="cantidad"
-              min="1"
-              value={cantidad}
-              onChange={handleCantidadChange}
-              className="form-control"
-              style={{ width: '100px', display: 'inline-block', marginRight: '10px' }}
-            />
-            <button onClick={handleAddToCartClick} className="btn btn-primary">Añadir al carrito</button>
-          </div>
+          <p><strong>Stock disponible: {producto.stock}</strong></p> {/* Mostrar el stock disponible */}
+          {producto.stock > 0 ? ( // Mostrar el selector de cantidad y botón si hay stock
+            <div className="quantity-input">
+              <label htmlFor="cantidad">Cantidad:</label>
+              <input
+                type="number"
+                id="cantidad"
+                name="cantidad"
+                min="1"
+                max={producto.stock} // Limitar la cantidad máxima al stock disponible
+                value={cantidad}
+                onChange={handleCantidadChange}
+                className="form-control"
+                style={{ width: '100px', display: 'inline-block', marginRight: '10px' }}
+              />
+              <button onClick={handleAddToCartClick} className="btn btn-primary">Añadir al carrito</button>
+            </div>
+          ) : (
+            <p className="text-danger"><strong>No hay stock disponible</strong></p> // Mostrar mensaje si no hay stock
+          )}
         </div>
       </div>
     </div>

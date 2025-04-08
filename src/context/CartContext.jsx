@@ -1,4 +1,6 @@
 import React, { createContext, useState } from 'react';
+import { doc, updateDoc, getDoc } from 'firebase/firestore'; // Importar funciones de Firebase
+import db from '../firebaseConfig'; // Importar la configuración de Firebase
 
 // Crear el contexto
 export const CartContext = createContext();
@@ -27,12 +29,36 @@ export const CartComponentContext = ({ children }) => {
     });
   };
 
-  // Función para eliminar un producto del carrito
-  const handleRemove = (id) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+  // Función para eliminar un producto del carrito y devolver el stock a Firebase
+  const handleRemove = async (id) => {
+    const itemToRemove = cart.find((item) => item.id === id);
+    if (itemToRemove) {
+      const productRef = doc(db, 'items', id);
+
+      try {
+        // Obtener el stock actual desde Firebase
+        const productSnap = await getDoc(productRef);
+        if (productSnap.exists()) {
+          const currentStock = productSnap.data().stock;
+
+          // Actualizar el stock en Firebase
+          await updateDoc(productRef, {
+            stock: currentStock + itemToRemove.quantity, // Sumar la cantidad eliminada al stock actual
+          });
+          console.log(`Stock actualizado para el producto ${id}: ${currentStock + itemToRemove.quantity}`);
+        } else {
+          console.error('El producto no existe en la base de datos.');
+        }
+      } catch (error) {
+        console.error('Error al devolver el stock:', error);
+      }
+
+      // Eliminar el producto del carrito
+      setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+    }
   };
 
-  // **Nueva función para actualizar la cantidad de un producto**
+  // Función para actualizar la cantidad de un producto en el carrito
   const handleUpdateQuantity = (id, quantity) => {
     setCart((prevCart) =>
       prevCart.map((item) =>
@@ -41,8 +67,20 @@ export const CartComponentContext = ({ children }) => {
     );
   };
 
-  // Función para vaciar el carrito
-  const handleEmptyCart = () => {
+  // Función para vaciar el carrito y devolver el stock de todos los productos
+  const handleEmptyCart = async () => {
+    try {
+      for (const item of cart) {
+        const productRef = doc(db, 'items', item.id);
+        await updateDoc(productRef, {
+          stock: item.stock + item.quantity, // Devolver el stock de cada producto
+        });
+      }
+      console.log('Stock devuelto para todos los productos del carrito');
+    } catch (error) {
+      console.error('Error al devolver el stock al vaciar el carrito:', error);
+    }
+
     setCart([]); // Vaciar el carrito
   };
 
@@ -53,8 +91,8 @@ export const CartComponentContext = ({ children }) => {
         handleCount,
         handleAddToCart,
         handleRemove,
-        handleUpdateQuantity, // Asegúrate de incluir esta función en el contexto
-        handleEmptyCart, // Asegúrate de incluir esta función en el contexto
+        handleUpdateQuantity,
+        handleEmptyCart,
       }}
     >
       {children}
